@@ -2,9 +2,9 @@ function ProdutoService() {
 
     var http = new HttpRequest();
 
-    this.insert = function (filters) {
+    this.insert = function (file) {
 
-        return http.post(BASE_URL + 'api/produto/v1/insert', JSON.stringify(filters), "application/json")
+        return http.post(BASE_URL + 'api/produto/v1/insert', file)
             .then(function (result) {
                 return result;
             }, function (error) {
