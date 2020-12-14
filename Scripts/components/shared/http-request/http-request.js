@@ -57,5 +57,27 @@ function HttpRequest() {
 				message: error.statusText
 			};
 		});
-    }
+	}
+	
+	this.upload = async function (url, data) {
+
+		var opts = {
+			method: "POST",
+			url: url,
+			data: data,
+			enctype: 'multipart/form-data',
+			cache: false,
+			contentType: false,
+			processData: false
+		};
+
+		return await $.ajax(opts).then(
+			function (resp) {
+				return resp;
+			},
+			function (error) {
+				return { error: true, message: error.statusText };
+			}
+		);
+	}
 }
