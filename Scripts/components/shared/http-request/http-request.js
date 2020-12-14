@@ -1,6 +1,6 @@
 function HttpRequest() {
 
-	this.post = function (url, data = null, contentType = null) {
+	this.post = function (url, data = null, contentType = null, processData = null, dataType = null) {
 
 		var opts = {
 			type: 'POST',
@@ -10,6 +10,12 @@ function HttpRequest() {
 
 		if (contentType)
 			opts.contentType = contentType;
+
+		if (processData)
+			opts.processData = processData;
+
+		if (dataType)
+			opts.dataType = dataType;	
 
 		return $.ajax(opts).then(function (data) {
 			return {

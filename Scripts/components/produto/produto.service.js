@@ -4,7 +4,7 @@ function ProdutoService() {
 
     this.insert = function (file) {
 
-        return http.post(BASE_URL + 'api/produto/v1/insert', file)
+        return http.post(BASE_URL + 'api/produto/v1/insert', file, false, false, "JSON")
             .then(function (result) {
                 return result;
             }, function (error) {
