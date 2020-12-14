@@ -17,24 +17,41 @@ function ImportacaoComponent() {
         formData.append('file', $('#planilha')[0].files[0]);
         
         api.insert(formData).then(function(data) {
-    
+            console.log(data.status);
             if (data.status == 'success') {
-                console.log(data);
 
-                // $("#tabela_produtoConsolidado tbody").html("");
-
-                // $(data.resp).each(function() {
-                //     $("#tabela_produtoConsolidado tbody").append(
-                //         `<tr>
-                //             <td>${this.nomeProduto}</td>
-                //             <td>20/04/2020</td>
-                //             <td>${this.quantidadeTotal}</td>
-                //             <td>${this.valorTotal}</td>
-                //         </tr>`
-                //     );
-                // });
+                $(data.resp).each(function() {
+                    $("#tabela_produtos tbody").append(
+                        `<tr>
+                            <td>${this.dataImportacaoString}</td>
+                            <td>${this.dataEntregaString}</td>
+                            <td>${this.nomeProduto}</td>
+                            <td>${this.quantidade}</td>
+                            <td>${this.valorUnitario}</td>
+                        </tr>`
+                    );
+                });
             }
-            else console.log("erro", data.status);
+            else {
+                console.log("erro", data.status);
+                if (data.responseText != null && data.responseText != undefined) {
+                    $(data.responseText).each(function() {
+                        var warning = this.hasError ? "text-danger" : "";
+                        
+                        $("#tabela_produtos tbody").append(
+                            `<tr class="${warning}">
+                                <td>${this.dataImportacaoString}</td>
+                                <td>${this.dataEntregaString}</td>
+                                <td>${this.nomeProduto}</td>
+                                <td>${this.quantidade}</td>
+                                <td>${this.valorUnitario}</td>
+                            </tr>`
+                        );
+                    });
+                }
+                alert("Ocorreu um erro durante a importação");
+            }
+
         });
 
     }

@@ -73,10 +73,17 @@ function HttpRequest() {
 
 		return await $.ajax(opts).then(
 			function (resp) {
-				return resp;
+				return {
+					resp: resp,
+					status: 'success'
+				};
 			},
 			function (error) {
-				return { error: true, message: error.statusText };
+				var obj = { error: true, message: error.statusText };
+				if (error.responseText != null && error.responseText != undefined)
+					obj.responseText = JSON.parse(error.responseText);
+
+				return obj;
 			}
 		);
 	}
